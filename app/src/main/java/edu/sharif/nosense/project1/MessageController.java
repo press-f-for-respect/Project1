@@ -12,6 +12,10 @@ public class MessageController {
         this.notificationCenter = notificationCenter;
     }
 
+    public ArrayList<Integer> getListOfNumbers() {
+        return listOfNumbers;
+    }
+
     public void fetch(boolean fromCache) {
         if (fromCache) {
             Thread storage = new Thread(new Runnable() {
@@ -25,10 +29,16 @@ public class MessageController {
             Thread cloud = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    ArrayList<Integer> loadedList = connectionManager.load(listOfNumbers.get(listOfNumbers.size() - 1));
+                    ArrayList<Integer> loadedList = connectionManager.load(0);
+                    updateList(loadedList);
                 }
             });
             cloud.start();
         }
+    }
+
+    private synchronized void updateList(ArrayList<Integer> toAppendList) {
+        listOfNumbers.addAll(toAppendList);
+        notificationCenter.notifyObservers();
     }
 }

@@ -14,4 +14,10 @@ public class NotificationCenter {
     public void unRegister(Observer observer) {
         observers.remove(observer);
     }
+
+    public void notifyObservers(){
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
 }
