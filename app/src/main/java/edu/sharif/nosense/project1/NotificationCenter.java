@@ -7,6 +7,10 @@ public class NotificationCenter {
     private List<Observer> observers = new ArrayList<>();
     private boolean dataLoaded = false;
 
+    public static interface Observer {
+        void update();
+    }
+
     public void register(Observer observer){
         observers.add(observer);
     }
