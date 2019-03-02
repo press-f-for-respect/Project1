@@ -37,12 +37,17 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
     @Override
     public void update() {
-//        listContainer.removeAllViews();
-        ArrayList<Integer> updatedListOfNumbers = messageController.getListOfNumbers();
-        for (Integer number : updatedListOfNumbers) {
-            TextView textView = new TextView(this);
-            textView.setText(String.valueOf(number));
-            listContainer.addView(textView);
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listContainer.removeAllViews();
+                ArrayList<Integer> updatedListOfNumbers = messageController.getListOfNumbers();
+                for (Integer number : updatedListOfNumbers) {
+                    TextView textView = new TextView(MainActivity.this);
+                    textView.setText(String.valueOf(number));
+                    listContainer.addView(textView);
+                }
+            }
+        });
     }
 }
