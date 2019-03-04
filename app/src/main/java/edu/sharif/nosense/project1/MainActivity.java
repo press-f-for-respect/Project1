@@ -20,11 +20,18 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
         setContentView(R.layout.activity_main);
         notificationCenter.register(this);
         listContainer = (LinearLayout)findViewById(R.id.listContainer);
-        Button button = (Button)findViewById(R.id.getButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button getButton = (Button)findViewById(R.id.getButton);
+        getButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 messageController.fetch(false);
+            }
+        });
+        Button clear = findViewById(R.id.clearButton);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listContainer.removeAllViews();
             }
         });
     }

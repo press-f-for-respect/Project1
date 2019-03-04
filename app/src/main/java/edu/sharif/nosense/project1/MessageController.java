@@ -1,5 +1,7 @@
 package edu.sharif.nosense.project1;
 
+import android.os.Handler;
+
 import java.util.ArrayList;
 
 public class MessageController {
@@ -7,6 +9,7 @@ public class MessageController {
     private StorageManager storageManager = new StorageManager();
     private ConnectionManager connectionManager = new ConnectionManager();
     private ArrayList<Integer> listOfNumbers = new ArrayList<>();
+    private Handler handler = new Handler();
 
     public MessageController(NotificationCenter notificationCenter) {
         this.notificationCenter = notificationCenter;
@@ -29,8 +32,13 @@ public class MessageController {
             Thread cloud = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    ArrayList<Integer> loadedList = connectionManager.load(0);
-                    updateList(loadedList);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ArrayList<Integer> loadedList = connectionManager.load(0);
+                            updateList(loadedList);
+                        }
+                    });
                 }
             });
             cloud.start();
