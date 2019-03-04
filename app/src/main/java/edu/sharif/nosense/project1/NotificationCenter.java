@@ -5,10 +5,13 @@ import java.util.List;
 
 public class NotificationCenter {
     private List<Observer> observers = new ArrayList<>();
-    private boolean dataLoaded = false;
 
     public static interface Observer {
         void update();
+    }
+
+    public void dataLoaded(){
+        notifyObservers();
     }
 
     public void register(Observer observer){

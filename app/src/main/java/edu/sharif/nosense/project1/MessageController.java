@@ -9,7 +9,8 @@ public class MessageController {
     private StorageManager storageManager = new StorageManager();
     private ConnectionManager connectionManager = new ConnectionManager();
     private ArrayList<Integer> listOfNumbers = new ArrayList<>();
-    private Handler handler = new Handler();
+    private DispatchQueue cloud = new DispatchQueue("cloud");
+    private DispatchQueue storage = new DispatchQueue("storage");
 
     public MessageController(NotificationCenter notificationCenter) {
         this.notificationCenter = notificationCenter;
@@ -21,7 +22,7 @@ public class MessageController {
 
     public void fetch(boolean fromCache) {
         if (fromCache) {
-            Thread storage = new Thread(new Runnable() {
+            storage.postRunnable(new Runnable() {
                 @Override
                 public void run() {
 
@@ -29,24 +30,18 @@ public class MessageController {
             });
             storage.start();
         } else {
-            Thread cloud = new Thread(new Runnable() {
+            cloud.postRunnable(new Runnable() {
                 @Override
                 public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ArrayList<Integer> loadedList = connectionManager.load(0);
-                            updateList(loadedList);
-                        }
-                    });
+                    ArrayList<Integer> loadedList = connectionManager.load(0);
+                    updateList(loadedList);
                 }
-            });
-            cloud.start();
+            }, 5000);
         }
     }
 
     private synchronized void updateList(ArrayList<Integer> toAppendList) {
         listOfNumbers.addAll(toAppendList);
-        notificationCenter.notifyObservers();
+        notificationCenter.dataLoaded();
     }
 }
