@@ -34,6 +34,13 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
                 listContainer.removeAllViews();
             }
         });
+        Button refresh = findViewById(R.id.refreshButton);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                update();
+            }
+        });
     }
 
     @Override
@@ -57,4 +64,6 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
             }
         });
     }
+
+
 }

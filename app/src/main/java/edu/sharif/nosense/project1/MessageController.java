@@ -1,7 +1,5 @@
 package edu.sharif.nosense.project1;
 
-import android.os.Handler;
-
 import java.util.ArrayList;
 
 public class MessageController {
