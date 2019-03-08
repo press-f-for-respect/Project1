@@ -1,17 +1,20 @@
 package edu.sharif.nosense.project1;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 public class MessageController {
     private NotificationCenter notificationCenter;
-    private StorageManager storageManager = new StorageManager();
+    private StorageManager storageManager;
     private ConnectionManager connectionManager = new ConnectionManager();
     private ArrayList<Integer> listOfNumbers = new ArrayList<>();
     private DispatchQueue cloud = new DispatchQueue("cloud");
     private DispatchQueue storage = new DispatchQueue("storage");
 
-    public MessageController(NotificationCenter notificationCenter) {
+    public MessageController(NotificationCenter notificationCenter, Context context) {
         this.notificationCenter = notificationCenter;
+        this.storageManager = new StorageManager(context);
     }
 
     public ArrayList<Integer> getListOfNumbers() {

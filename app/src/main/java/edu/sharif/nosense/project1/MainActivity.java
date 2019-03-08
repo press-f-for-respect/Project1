@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NotificationCenter.Observer{
     private NotificationCenter notificationCenter = new NotificationCenter();
-    private MessageController messageController = new MessageController(this.notificationCenter);
+    private MessageController messageController = new MessageController(this.notificationCenter, getApplicationContext());
     private LinearLayout listContainer;
 
     @Override
