@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NotificationCenter.Observer{
     private NotificationCenter notificationCenter = new NotificationCenter();
-    private MessageController messageController = new MessageController(this.notificationCenter, getApplicationContext());
+    private MessageController messageController;
     private LinearLayout listContainer;
 
     @Override
@@ -19,12 +19,14 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         notificationCenter.register(this);
-        listContainer = (LinearLayout)findViewById(R.id.listContainer);
-        Button getButton = (Button)findViewById(R.id.getButton);
+        listContainer = findViewById(R.id.listContainer);
+        messageController = MessageController.getInstance(notificationCenter, getApplicationContext());
+        update();
+        Button getButton = findViewById(R.id.getButton);
         getButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                messageController.fetch(false);
+                messageController.fetch(true);
             }
         });
         Button clear = findViewById(R.id.clearButton);
@@ -32,13 +34,14 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
             @Override
             public void onClick(View view) {
                 listContainer.removeAllViews();
+                messageController.getListOfNumbers().clear();
             }
         });
         Button refresh = findViewById(R.id.refreshButton);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                update();
+                messageController.refresh();
             }
         });
     }

@@ -6,7 +6,7 @@ import java.util.List;
 public class NotificationCenter {
     private List<Observer> observers = new ArrayList<>();
 
-    public static interface Observer {
+    public interface Observer {
         void update();
     }
 

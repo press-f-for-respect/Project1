@@ -8,9 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class StorageManager {
@@ -23,11 +21,7 @@ public class StorageManager {
         this.filename = context.getString(R.string.file_addr);
     }
 
-
-    public ArrayList<Integer> load(){
-        ArrayList<Integer> list = new ArrayList<>();
-        int numberInTheFile = 0;
-
+    public int read(){
         try {
             FileInputStream fileInputStream = context.openFileInput(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
@@ -36,18 +30,26 @@ public class StorageManager {
             while(( line = br.readLine()) != null ) {
                 sb.append( line );
             }
-            numberInTheFile = Integer.parseInt(sb.toString());
             fileInputStream.close();
+            return Integer.parseInt(sb.toString());
         } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
-            numberInTheFile = 0;
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
+        return -1;
+    }
 
+
+    public ArrayList<Integer> load(){
+        ArrayList<Integer> list = new ArrayList<>();
+        int numberInTheFile = read();
+        if(numberInTheFile == -1)
+            numberInTheFile = 0;
         for (int i = 1; i <= 10; i++) {
             list.add(numberInTheFile + i);
         }
+        save(list.get(list.size()-1));
         return list;
     }
 
@@ -61,5 +63,9 @@ public class StorageManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }
