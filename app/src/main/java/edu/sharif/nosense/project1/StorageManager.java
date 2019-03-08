@@ -35,7 +35,6 @@ public class StorageManager {
             String line;
             while(( line = br.readLine()) != null ) {
                 sb.append( line );
-                sb.append( '\n' );
             }
             numberInTheFile = Integer.parseInt(sb.toString());
             fileInputStream.close();
