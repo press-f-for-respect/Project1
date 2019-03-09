@@ -16,8 +16,6 @@ public class MessageController {
     public static MessageController getInstance(NotificationCenter notificationCenter, Context context){
         if(messageController == null)
             messageController = new MessageController(notificationCenter, context);
-        else
-            messageController.notificationCenter = notificationCenter;
         return messageController;
 
     }

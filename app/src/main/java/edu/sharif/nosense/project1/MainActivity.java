@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NotificationCenter.Observer{
-    private NotificationCenter notificationCenter = new NotificationCenter();
+    private NotificationCenter notificationCenter = NotificationCenter.getInstance();
     private MessageController messageController;
     private LinearLayout listContainer;
 
